@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#leftFloatAd{
+  position: fixed;
+      top: 75px;
+      left: 15px;
+      width: 120px;
+      height: 610px;
+      cursor: cell;
+}
+#rightFloatAd{
+  position: fixed;
+      top: 75px;
+      right: 15px;
+      width: 120px;
+      height: 610px;
+      cursor: cell;
+}
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7431909844582259"
+     crossorigin="anonymous"></script>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+   <link rel="stylesheet" href="css/general.css">
+   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+   <script src="server.js"></script>
+</head>
+<body style='font-family: "Poppins", sans-serif;'>
+   <div id="header"></div> 
+   <div id="content">
+
+      <form class="searchbar" id="uv-form">
+         <h1>Proxy &middot; Geometry Tryhard</h1>
+         <h2>Search the web with Google</h2>
+         <input id="uv-search-engine" value="https://www.google.com/search?q=%s" type="hidden"/> 
+         <input id="uv-address" class="search-bar" type="text" placeholder="  Search Google or type a URL" class="form__input"/>
+         <h3>To make the proxy function, once you input your search, if the screen goes white or says TypeError: Failed to Fetch, right-click the screen and select reload/refresh frame until it works. You should only need to do this the first time using this proxy, when you change the server, or reset cookies/browser cache.</h3>
+         <p id="uv-error" style="color: red;"></p>
+         <pre id="uv-error-code" style="color: red;"></pre>
+      </form>
+
+   </div>
+   <script>
+   "use strict";
+
+   // Functions for generating random numbers
+   function getRandom(max) {
+      return Math.floor(Math.random() * Math.floor(max)) + 1;
+   }
+
+   // Check if server-node is not set in localStorage
+   var server = localStorage.getItem('server-node');
+   if (typeof server === 'undefined' || server === null) {
+      getServer();
+   }
+function inputServer() {
+   var servernode1 = prompt("Variable 1 (1 through 13 digits)");
+   var domain1 = prompt("Variable 2 (1 through 8)");
+
+   // Convert domain1 to a number
+   domain1 = parseInt(domain1, 10);
+
+   // Validate servernode1
+   if (isNaN(servernode1) || servernode1 < 1 || servernode1 > 9999999999999) {
+      alert("Please enter a valid number for Variable 1 (1 through 13 digits).");
+      return; // Exit the function if input is invalid
+   }
+
+   // Validate domain1
+   if (isNaN(domain1) || domain1 < 1 || domain1 > 8) {
+      alert("Please enter a valid number for Variable 2 (1 through 8).");
+      return; // Exit the function if input is invalid
+   }
+
+   switch (domain1) {
+      case 1:
+         localStorage.setItem('domain', '.topvazgeo.online/launch.html?domain=');
+         break;
+      case 2:
+         localStorage.setItem('domain', '.topvazgeo.site/launch.html?domain=');
+         break;
+      case 3:
+         localStorage.setItem('domain', '.mathsblog.online/launch.html?domain=');
+         break;
+      case 4:
+         localStorage.setItem('domain', '.mathematicstopvaz.site/launch.html?domain=');
+         break;
+      case 5:
+         localStorage.setItem('domain', '.topvazgeometry.online/launch.html?domain=');
+         break;
+      case 6:
+         localStorage.setItem('domain', '.tvazgeometry.online/launch.html?domain=');
+         break;
+      case 7:
+         localStorage.setItem('domain', '.tvazgeo.site/launch.html?domain=');
+         break;
+      case 8:
+         localStorage.setItem('domain', '.tvazgeo.online/launch.html?domain=');
+         break;
+      default:
+         alert("Invalid domain selection. Setting to default domain.");
+         localStorage.setItem('domain', '.topvazgeo.online/launch.html?domain=');
+         break;
+   }
+   localStorage.setItem('server-node', servernode1);
+}
+
+function getServer() {
+   localStorage.setItem('server-node', getRandom(1000000000000));
+   var header = getRandom(8);
+   switch (header) {
+      case 1:
+         localStorage.setItem('domain', '.topvazgeo.online/launch.html?domain=');
+         break;
+      case 2:
+         localStorage.setItem('domain', '.topvazgeo.site/launch.html?domain=');
+         break;
+      case 3:
+         localStorage.setItem('domain', '.mathsblog.online/launch.html?domain=');
+         break;
+      case 4:
+         localStorage.setItem('domain', '.mathematicstopvaz.site/launch.html?domain=');
+         break;
+      case 5:
+         localStorage.setItem('domain', '.topvazgeometry.online/launch.html?domain=');
+         break;
+      case 6:
+         localStorage.setItem('domain', '.tvazgeometry.online/launch.html?domain=');
+         break;
+      case 7:
+         localStorage.setItem('domain', '.tvazgeo.site/launch.html?domain=');
+         break;
+      case 8:
+         localStorage.setItem('domain', '.tvazgeo.online/launch.html?domain=');
+         break;
+      default:
+         localStorage.setItem('domain', '.topvazgeo.online/launch.html?domain=');
+         break;
+   }
+}
+
+
+   // Search function to convert input into a fully qualified URL or search query
+   function search(input, template) {
+      if (!input || typeof input !== 'string') {
+         console.error("Invalid input: Input must be a non-empty string.");
+         return "";
+      }
+
+      try {
+         // Input is a valid URL:
+         return new URL(input).toString();
+      } catch (err) {
+         console.error("Invalid URL:", err);
+      }
+
+      try {
+         // Input is a valid URL when http:// is added to the start:
+         const url = new URL(`http://${input}`);
+         // Only if the hostname has a TLD/subdomain
+         if (url.hostname.includes(".")) return url.toString();
+      } catch (err) {
+         console.error("Invalid URL with http://:", err);
+      }
+
+      // Attempts to convert the input to a fully qualified URL have failed
+      // Treat the input as a search query
+      return template.replace("%s", encodeURIComponent(input));
+   }
+
+   /**
+    * @type {HTMLFormElement}
+    */
+   const form = document.getElementById("uv-form");
+   /**
+    * @type {HTMLInputElement}
+    */
+   const address = document.getElementById("uv-address");
+   /**
+    * @type {HTMLInputElement}
+    */
+   const searchEngine = document.getElementById("uv-search-engine");
+   /**
+    * @type {HTMLParagraphElement}
+    */
+   const error = document.getElementById("uv-error");
+   /**
+    * @type {HTMLPreElement}
+    */
+   const errorCode = document.getElementById("uv-error-code");
+
+   form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      try {
+         await registerSW();
+      } catch (err) {
+         error.textContent = "Failed to register service worker.";
+         errorCode.textContent = err.toString();
+         return; // Early exit
+      }
+
+      const domain = localStorage.getItem('domain');
+      const servernode = localStorage.getItem('server-node');
+
+      // Check if domain and servernode are not null
+      if (!domain || !servernode) {
+         getServer(); //get server
+      }
+
+      const url = search(address.value, searchEngine.value);
+      
+      // Verify if the URL is valid before constructing the redirect
+      if (!url) {
+         error.textContent = "Invalid search query.";
+         return; // Early exit
+      }
+      
+      location.href = '//' + servernode + domain + url;
+   });
+   </script>
+   <script src="uv/uv.bundle.js" defer></script>
+   <script src="uv/uv.config.js" defer></script>
+   <script src="register-sw.js" defer></script>
+
+   <center>
+      <center>
+         <button onclick="getServer();">Reroll server (random)</button><button onclick="inputServer();">Reroll server (custom)</button>
+      <div style='font-family: "Poppins", sans-serif;' class="credits">
+         <h4>Credits to TIW for making <a href="https://github.com/TheTIW/UV-Static/tree/main/static" target="_blank">UV Static</a>, which I modded to redirect and used their search.js.
+         <br>
+         Credits to TopVaz for owning the server. This is simply a redirect.</h4>
+      </div>
+   </center>
+<div id="leftFloatAd">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7431909844582259"
+     crossorigin="anonymous"></script>
+<!-- vertigame -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:120px;height:610px"
+     data-ad-client="ca-pub-7431909844582259"
+     data-ad-slot="4943083024"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+<div id="rightFloatAd"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7431909844582259"
+     crossorigin="anonymous"></script>
+<!-- vertigame -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:120px;height:610px"
+     data-ad-client="ca-pub-7431909844582259"
+     data-ad-slot="4943083024"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+</body>
+</html>
